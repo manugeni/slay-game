@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slay! - Coming Soon</title>
+    <title>Slay!</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
+    <script src="js/game3d.js" defer></script>
+    <script src="js/player3d.js" defer></script>
+    <script src="js/enemy3d.js" defer></script>
+    <script src="js/weapons3d.js" defer></script>
 </head>
 <body>
-    <div class="coming-soon">
-        <img src="images/SlayLogo.png" alt="Slay! Logo">
-        <h1>Coming Soon!</h1>
-        <p>Stay tuned for the release of Slay!</p>
-    </div>
+    <div id="game-container"></div>
 </body>
 </html>
