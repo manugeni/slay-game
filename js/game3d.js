@@ -54,4 +54,47 @@ class Game3D {
             path + 'pz' + format, path + 'nz' + format
         ];
 
-        const reflectionCube = new THREE.CubeTexture
+        const reflectionCube = new THREE.CubeTextureLoader().load(urls);
+        reflectionCube.format = THREE.RGBFormat;
+
+        this.scene.background = reflectionCube;
+    }
+
+    setupEventListeners() {
+        document.addEventListener('keydown', (event) => {
+            if (event.key === ' ') {
+                this.weapons.shoot(this.player.mesh.position);
+            }
+        });
+    }
+
+    animate() {
+        requestAnimationFrame(this.animate);
+        this.controls.update();
+        this.updateEnemies();
+        this.weapons.update();
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    addEnemy() {
+        const enemy = new Enemy3D(this.scene);
+        this.enemies.push(enemy);
+    }
+
+    updateEnemies() {
+        this.enemies.forEach((enemy, index) => {
+            enemy.update();
+            if (enemy.mesh.position.z > 10) {
+                this.scene.remove(enemy.mesh);
+                this.enemies.splice(index, 1);
+            }
+        });
+    }
+}
+
+const game = new Game3D();
+
+// Add enemies periodically
+setInterval(() => {
+    game.addEnemy();
+}, 2000);
