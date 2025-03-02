@@ -3,134 +3,119 @@ class Player {
         this.camera = camera;
         this.scene = scene;
         this.health = 100;
+        this.maxHealth = 100;
         this.score = 0;
-        this.ammo = 30;
-        this.maxAmmo = 30;
-        this.reloadTime = 2000;
-        this.isReloading = false;
-        this.projectiles = [];
+        this.moveSpeed = 10;
+        this.sprintSpeed = 15;
+        this.currentSpeed = this.moveSpeed;
+        this.jumpForce = 15;
+        this.gravity = -30;
+        this.velocity = new THREE.Vector3();
+        this.jumping = false;
         
         this.setupControls();
-        this.setupWeapon();
-        this.updateUI();
+        this.weapon = new Weapon(scene, camera);
+        this.projectiles = [];
     }
 
     setupControls() {
         this.controls = new THREE.PointerLockControls(this.camera, document.body);
-        this.moveForward = false;
-        this.moveBackward = false;
-        this.moveLeft = false;
-        this.moveRight = false;
-        this.canJump = true;
-        this.velocity = new THREE.Vector3();
-
-        document.addEventListener('keydown', (event) => this.onKeyDown(event));
-        document.addEventListener('keyup', (event) => this.onKeyUp(event));
-    }
-
-    setupWeapon() {
-        // Create weapon model
-        const weaponGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.5);
-        const weaponMaterial = new THREE.MeshStandardMaterial({ color: 0x666666 });
-        this.weapon = new THREE.Mesh(weaponGeometry, weaponMaterial);
         
-        // Position weapon in front of camera
-        this.weapon.position.set(0.3, -0.2, -0.5);
-        this.camera.add(this.weapon);
-        this.scene.add(this.camera);
+        this.movement = {
+            forward: false,
+            backward: false,
+            left: false,
+            right: false,
+            sprint: false
+        };
+
+        // Event listeners
+        document.addEventListener('keydown', (e) => this.onKeyDown(e));
+        document.addEventListener('keyup', (e) => this.onKeyUp(e));
+        document.addEventListener('click', () => this.onClick());
+        
+        // Lock pointer on canvas click
+        document.addEventListener('click', () => {
+            if (!this.controls.isLocked) {
+                this.controls.lock();
+            }
+        });
     }
 
     onKeyDown(event) {
-        switch (event.code) {
-            case 'ArrowUp':
-            case 'KeyW':
-                this.moveForward = true;
-                break;
-            case 'ArrowDown':
-            case 'KeyS':
-                this.moveBackward = true;
-                break;
-            case 'ArrowLeft':
-            case 'KeyA':
-                this.moveLeft = true;
-                break;
-            case 'ArrowRight':
-            case 'KeyD':
-                this.moveRight = true;
-                break;
-            case 'Space':
-                if (this.canJump) {
-                    this.velocity.y += 350;
-                    this.canJump = false;
+        switch(event.code) {
+            case 'KeyW': this.movement.forward = true; break;
+            case 'KeyS': this.movement.backward = true; break;
+            case 'KeyA': this.movement.left = true; break;
+            case 'KeyD': this.movement.right = true; break;
+            case 'Space': 
+                if (!this.jumping) {
+                    this.jump();
                 }
                 break;
+            case 'ShiftLeft':
+                this.movement.sprint = true;
+                this.currentSpeed = this.sprintSpeed;
+                break;
             case 'KeyR':
-                this.reload();
+                this.weapon.reload();
                 break;
         }
     }
 
     onKeyUp(event) {
-        switch (event.code) {
-            case 'ArrowUp':
-            case 'KeyW':
-                this.moveForward = false;
-                break;
-            case 'ArrowDown':
-            case 'KeyS':
-                this.moveBackward = false;
-                break;
-            case 'ArrowLeft':
-            case 'KeyA':
-                this.moveLeft = false;
-                break;
-            case 'ArrowRight':
-            case 'KeyD':
-                this.moveRight = false;
+        switch(event.code) {
+            case 'KeyW': this.movement.forward = false; break;
+            case 'KeyS': this.movement.backward = false; break;
+            case 'KeyA': this.movement.left = false; break;
+            case 'KeyD': this.movement.right = false; break;
+            case 'ShiftLeft':
+                this.movement.sprint = false;
+                this.currentSpeed = this.moveSpeed;
                 break;
         }
     }
 
-    shoot() {
-        if (this.isReloading || this.ammo <= 0) {
-            if (this.ammo <= 0) this.reload();
-            return;
+    onClick() {
+        if (this.controls.isLocked) {
+            const shot = this.weapon.shoot(this.projectiles);
+            if (shot) {
+                // Camera recoil effect
+                gsap.to(this.camera.rotation, {
+                    x: `-=${0.02}`,
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 1
+                });
+            }
         }
-
-        const projectile = new Projectile(
-            this.camera.position.clone(),
-            this.camera.getWorldDirection(new THREE.Vector3()),
-            this.scene
-        );
-        this.projectiles.push(projectile);
-        this.ammo--;
-        this.updateUI();
-
-        // Weapon recoil animation
-        gsap.to(this.weapon.position, {
-            z: -0.3,
-            duration: 0.05,
-            yoyo: true,
-            repeat: 1
-        });
     }
 
-    reload() {
-        if (this.isReloading || this.ammo === this.maxAmmo) return;
-        
-        this.isReloading = true;
-        document.getElementById('ammoValue').textContent = 'Reloading...';
-        
-        setTimeout(() => {
-            this.ammo = this.maxAmmo;
-            this.isReloading = false;
-            this.updateUI();
-        }, this.reloadTime);
+    jump() {
+        if (!this.jumping) {
+            this.velocity.y = this.jumpForce;
+            this.jumping = true;
+        }
     }
 
-    takeDamage(amount) {
-        this.health = Math.max(0, this.health - amount);
-        this.updateUI();
+    update(deltaTime) {
+        if (!this.controls.isLocked) return;
+
+        // Update movement
+        const direction = new THREE.Vector3();
         
-        if (this.health <= 0) {
-            alert(`Game Over! Final Score: ${this.score}`);
+        if (this.movement.forward) direction.z -= 1;
+        if (this.movement.backward) direction.z += 1;
+        if (this.movement.left) direction.x -= 1;
+        if (this.movement.right) direction.x += 1;
+
+        direction.normalize();
+        
+        // Apply movement in camera direction
+        if (direction.z !== 0) {
+            this.velocity.x += direction.z * Math.sin(this.camera.rotation.y) * this.currentSpeed;
+            this.velocity.z += direction.z * Math.cos(this.camera.rotation.y) * this.currentSpeed;
+        }
+        if (direction.x !== 0) {
+            this.velocity.x += direction.x * Math.cos(this.camera.rotation.y) * this.currentSpeed;
+            this.
