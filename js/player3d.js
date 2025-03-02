@@ -1,12 +1,18 @@
+import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js';
+
 class Player3D {
     constructor(scene) {
         this.scene = scene;
-        this.mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 1, 1),
-            new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-        );
-        this.mesh.position.set(0, 0, 0);
-        this.scene.add(this.mesh);
+        this.mesh = null;
+
+        const loader = new GLTFLoader();
+        loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
+            this.mesh = gltf.scene;
+            this.mesh.scale.set(0.5, 0.5, 0.5);
+            this.mesh.position.set(0, 0, 0);
+            this.scene.add(this.mesh);
+        });
 
         this.setupControls();
     }
@@ -29,22 +35,6 @@ class Player3D {
             }
         });
     }
-}
-
-// In player3d.js, update the constructor
-constructor(scene) {
-    this.scene = scene;
-    this.mesh = null;
-
-    const loader = new GLTFLoader();
-    loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
-        this.mesh = gltf.scene;
-        this.mesh.scale.set(0.5, 0.5, 0.5);
-        this.mesh.position.set(0, 0, 0);
-        this.scene.add(this.mesh);
-    });
-
-    this.setupControls();
 }
 
 export default Player3D;
