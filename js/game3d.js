@@ -72,3 +72,37 @@ const game = new Game3D();
 setInterval(() => {
     game.addEnemy();
 }, 2000);
+
+// In game3d.js, add the following method
+setupGround() {
+    const geometry = new THREE.PlaneGeometry(20, 20);
+    const material = new THREE.MeshStandardMaterial({ color: 0x808080, side: THREE.DoubleSide });
+    const ground = new THREE.Mesh(geometry, material);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -1;
+    this.scene.add(ground);
+}
+
+// Call setupGround in the constructor
+constructor() {
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('game-container').appendChild(this.renderer.domElement);
+
+    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+
+    this.player = new Player3D(this.scene);
+    this.enemies = [];
+    this.weapons = new Weapons3D(this.scene);
+
+    this.camera.position.z = 10;
+
+    this.setupLighting();
+    this.setupGround();
+    this.setupEventListeners();
+
+    this.animate = this.animate.bind(this);
+    this.animate();
+}
