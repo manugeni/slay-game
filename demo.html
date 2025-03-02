@@ -3,50 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slay! - A web-based rpg game</title>
+    <title>Slay! - Coming Soon</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="loading-screen" id="loadingScreen">
-        <img src="images/SlayLogo.png" alt="Slay! Logo" class="loading-logo">
-        <div class="loading-bar-container">
-            <div class="loading-bar" id="loadingBar"></div>
-        </div>
-        <div class="loading-text">Loading...</div>
+    <div class="coming-soon">
+        <img src="images/SlayLogo.png" alt="Slay! Logo">
+        <h1>Coming Soon!</h1>
+        <p>Stay tuned for the release of Slay!</p>
     </div>
-
-    <div class="game-container">
-        <div id="ui">
-            <div id="health-container">
-                <div id="health-bar">
-                    <div id="health-fill"></div>
-                </div>
-                <span id="health-text">100</span>
-            </div>
-            <div id="score">Score: <span id="scoreValue">0</span></div>
-            <div id="ammo">Ammo: <span id="ammoValue">30</span></div>
-            <div id="wave">Wave: <span id="waveValue">1</span></div>
-        </div>
-        <div id="crosshair">+</div>
-        <div id="hit-marker"></div>
-    </div>
-
-    <div class="menu" id="pauseMenu">
-        <h2>Paused</h2>
-        <button onclick="game.resume()">Resume</button>
-        <button onclick="game.restart()">Restart</button>
-        <button onclick="window.location.href='index.html'">Main Menu</button>
-    </div>
-
-    <script src="node_modules/three/build/three.min.js"></script>
-    <script src="node_modules/three/examples/js/controls/PointerLockControls.js"></script>
-    <script src="node_modules/stats.js/build/stats.min.js"></script>
-    <script src="node_modules/dat.gui/build/dat.gui.min.js"></script>
-    <script src="node_modules/gsap/dist/gsap.min.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/weapons3d.js"></script>
-    <script src="js/enemy3d.js"></script>
-    <script src="js/player3d.js"></script>
-    <script src="js/game3d.js"></script>
 </body>
 </html>
