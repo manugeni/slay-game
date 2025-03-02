@@ -4,165 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slay! - Coming Soon</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            font-family: 'Arial', sans-serif;
-            color: #ffffff;
-            text-align: center;
+            overflow: hidden;
+            height: 100%;
         }
 
-        .container {
-            padding: 20px;
-            max-width: 800px;
-        }
-
-        .logo {
-            max-width: 400px;
-            margin-bottom: 40px;
-            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
-        }
-
-        h1 {
-            font-size: 3em;
-            margin: 20px 0;
-            color: #ff3434;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
         }
 
         .coming-soon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .coming-soon h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .coming-soon p {
             font-size: 1.5em;
-            margin: 20px 0;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
-        .countdown {
-            font-size: 2em;
-            margin: 30px 0;
-            color: #ff3434;
-        }
-
-        .subscribe {
-            margin-top: 40px;
-        }
-
-        .subscribe input {
+        .coming-soon button {
             padding: 10px 20px;
-            margin-right: 10px;
-            border: none;
-            border-radius: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1em;
-        }
-
-        .subscribe button {
-            padding: 10px 30px;
-            border: none;
-            border-radius: 25px;
-            background: #ff3434;
-            color: white;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .subscribe button:hover {
-            background: #ff5555;
-        }
-
-        .social-links {
-            margin-top: 40px;
-        }
-
-        .social-links a {
-            color: #ffffff;
-            margin: 0 15px;
-            font-size: 1.5em;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: #ff3434;
-        }
-
-        .play-demo {
-            margin-top: 30px;
-        }
-
-        .play-demo a {
-            display: inline-block;
-            padding: 15px 40px;
-            background: #ff3434;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
             font-size: 1.2em;
-            transition: background 0.3s ease;
+            color: white;
+            background-color: #ff0000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .play-demo a:hover {
-            background: #ff5555;
+        .coming-soon button:hover {
+            background-color: #cc0000;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <img src="images/SlayLogo.png" alt="Slay! Game Logo" class="logo">
-        <h1>Slay!</h1>
-        <div class="coming-soon">Coming Soon</div>
-        <div class="countdown" id="countdown">Loading...</div>
-        
-        <div class="subscribe">
-            <input type="email" placeholder="Enter your email for updates">
-            <button>Notify Me</button>
-        </div>
-
-        <div class="social-links">
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-github"></i></a>
-        </div>
-
-        <div class="play-demo">
-            <a href="demo.html">Play Demo Version</a>
-        </div>
+    <iframe id="video-background" src="https://www.youtube.com/watch?v=Moksf6Lxqpw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <div class="coming-soon">
+        <img src="images/SlayLogo.png" alt="Slay! Logo" style="width: 200px; margin-bottom: 20px;">
+        <h1>Coming Soon!</h1>
+        <p>Stay tuned for the release of Slay!</p>
+        <button onclick="alert('Subscribed!')">Subscribe for Updates</button>
     </div>
-
-    <script>
-        // Set the launch date (3 months from now)
-        const launchDate = new Date();
-        launchDate.setMonth(launchDate.getMonth() + 3);
-
-        function updateCountdown() {
-            const now = new Date();
-            const distance = launchDate - now;
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('countdown').innerHTML = 
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
-
-        // Update countdown every second
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
 </body>
 </html>
