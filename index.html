@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slay! - Coming Soon</title>
-    <link rel="icon" href="images/favicon.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+        }
+
         #video-background {
             position: fixed;
             right: 0;
@@ -17,10 +23,86 @@
             z-index: -1;
             pointer-events: none; /* Prevents interaction with the video */
         }
+
+        .coming-soon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            width: 80%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .coming-soon h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #ff5722;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .coming-soon p {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out 0.5s;
+        }
+
+        .coming-soon button {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: white;
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: slideIn 1s ease-in-out 1s;
+        }
+
+        .coming-soon button:hover {
+            background-color: #e64a19;
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translate(-50%, -60%) scale(0.9); }
+            to { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .coming-soon {
+                width: 90%;
+                padding: 30px;
+            }
+
+            .coming-soon h1 {
+                font-size: 2.5em;
+            }
+
+            .coming-soon p {
+                font-size: 1.2em;
+            }
+
+            .coming-soon button {
+                font-size: 1em;
+            }
+        }
     </style>
 </head>
 <body>
-    <iframe id="video-background" src="https://www.youtube.com/watch?v=Moksf6Lxqpw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <iframe id="video-background" src="https://www.youtube.com/embed/Moksf6Lxqpw?autoplay=1&mute=1&loop=1&playlist=Moksf6Lxqpw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     <div class="coming-soon">
         <img src="images/SlayLogo.png" alt="Slay! Logo" style="width: 200px; margin-bottom: 20px;">
         <h1>Coming Soon!</h1>
@@ -28,7 +110,6 @@
     </div>
     <div class="footer">
         <p>&copy; 2025 Slay! All rights reserved.</p>
-        <a href="https://github.com/manugeni/slay-game" target="_blank">GitHub</a>
     </div>
 </body>
 </html>
