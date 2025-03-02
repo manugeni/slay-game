@@ -19,6 +19,8 @@ class Player3D {
 
     setupControls() {
         document.addEventListener('keydown', (event) => {
+            if (!this.mesh) return;
+
             switch (event.key) {
                 case 'ArrowUp':
                     this.mesh.position.z -= 0.1;
