@@ -5,14 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slay! - Coming Soon</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-        }
-
         #video-background {
             position: fixed;
             right: 0;
@@ -20,44 +14,7 @@
             min-width: 100%;
             min-height: 100%;
             z-index: -1;
-        }
-
-        .coming-soon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        }
-
-        .coming-soon h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        .coming-soon p {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        .coming-soon button {
-            padding: 10px 20px;
-            font-size: 1.2em;
-            color: white;
-            background-color: #ff0000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .coming-soon button:hover {
-            background-color: #cc0000;
+            pointer-events: none; /* Prevents interaction with the video */
         }
     </style>
 </head>
@@ -68,6 +25,10 @@
         <h1>Coming Soon!</h1>
         <p>Stay tuned for the release of Slay!</p>
         <button onclick="alert('Subscribed!')">Subscribe for Updates</button>
+    </div>
+    <div class="footer">
+        <p>&copy; 2025 Slay! All rights reserved.</p>
+        <a href="https://github.com/manugeni/slay-game" target="_blank">GitHub</a>
     </div>
 </body>
 </html>
