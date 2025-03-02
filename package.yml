@@ -1,0 +1,15 @@
+name: slay-game
+version: 1.0.0
+description: A 3D web-based slayer game
+
+dependencies:
+  three: ^0.160.0
+  serve: ^14.0.0
+  live-server: ^1.2.2
+  stats.js: ^0.17.0
+  dat.gui: ^0.7.9
+  gsap: ^3.12.5
+
+scripts:
+  start: live-server --port=3000
+  dev: serve
