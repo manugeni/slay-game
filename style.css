@@ -1,11 +1,161 @@
+/* General Styles */
 body, html {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #000;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
+/* Video Background */
+#video-background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    pointer-events: none; /* Prevents interaction with the video */
+}
+
+/* Coming Soon Page */
+.coming-soon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+    width: 80%;
+    max-width: 600px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.coming-soon h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #ff5722;
+    animation: slideIn 1s ease-in-out;
+}
+
+.coming-soon p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    animation: slideIn 1s ease-in-out 0.5s;
+}
+
+.coming-soon button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #ff5722;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    animation: slideIn 1s ease-in-out 1s;
+}
+
+.coming-soon button:hover {
+    background-color: #e64a19;
+    transform: scale(1.05);
+}
+
+/* Game Page */
 #game-container {
     width: 100vw;
     height: 100vh;
+    background-color: #121212;
+    overflow: hidden;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translate(-50%, -60%) scale(0.9); }
+    to { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Additional Styles for Developer Site */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 4em;
+    color: #ff5722;
+    margin-bottom: 20px;
+}
+
+.header p {
+    font-size: 1.5em;
+    color: #b0bec5;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #1e1e1e;
+    color: #b0bec5;
+}
+
+.footer a {
+    color: #ff5722;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #e64a19;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .coming-soon {
+        width: 90%;
+        padding: 30px;
+    }
+
+    .coming-soon h1 {
+        font-size: 2.5em;
+    }
+
+    .coming-soon p {
+        font-size: 1.2em;
+    }
+
+    .coming-soon button {
+        font-size: 1em;
+    }
+
+    .header h1 {
+        font-size: 3em;
+    }
+
+    .header p {
+        font-size: 1.2em;
+    }
 }
