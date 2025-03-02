@@ -31,4 +31,20 @@ class Player3D {
     }
 }
 
+// In player3d.js, update the constructor
+constructor(scene) {
+    this.scene = scene;
+    this.mesh = null;
+
+    const loader = new GLTFLoader();
+    loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
+        this.mesh = gltf.scene;
+        this.mesh.scale.set(0.5, 0.5, 0.5);
+        this.mesh.position.set(0, 0, 0);
+        this.scene.add(this.mesh);
+    });
+
+    this.setupControls();
+}
+
 export default Player3D;
