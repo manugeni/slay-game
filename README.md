@@ -1,4 +1,4 @@
-# Slay!
+# RETRO SLAYER
 
 A web-based slayer game where you fight against waves of enemies!
 
